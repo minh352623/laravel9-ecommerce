@@ -1,0 +1,4 @@
+- thiết lập gate: cho phép truy cập vào controller
+b1:vào authserviceprovider  vào hàm boot định nghĩa
+
+- thiết lập policy: ứng với mỗi model(them sua xóa)
