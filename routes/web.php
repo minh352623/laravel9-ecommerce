@@ -34,7 +34,7 @@ Route::get('auth/facebook/callback', function () {
     return '<h3>call back facebook</h3>';
 });
 Route::get('auth/facebook', function () {
-    // return Socialite::driver('facebook')->redirect();
+    return Socialite::driver('facebook')->redirect();
 });
 
 Auth::routes();
