@@ -12,9 +12,12 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SettingController;
+
+//client
 use App\Http\Controllers\Clients\HomeController;
 use App\Http\Controllers\Clients\ProductClientController;
 use App\Http\Controllers\Clients\CartController;
+use App\Http\Controllers\Clients\FeaturesController;
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -46,17 +49,17 @@ Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('hom
 Route::prefix('product')->name('product.')->group(function () {
     Route::get('/', [ProductClientController::class, 'index'])->name('index');
     Route::get('/show/{id}', [ProductClientController::class, 'showProductGlobal'])->name('show');
+    Route::get('/detail/{id}', [ProductClientController::class, 'detail'])->name('detail');
 });
 Route::prefix('cart')->name('cart.')->group(function () {
-    
+
     Route::post('/add', [CartController::class, 'add'])->name('add');
+    Route::post('/remove', [CartController::class, 'remove'])->name('remove');
 });
 
 
 Route::prefix('features')->name('features.')->group(function () {
-    Route::get('/', function () {
-        return 'cart';
-    })->name('index');
+    Route::get('/', [FeaturesController::class, 'index'])->name('index');
 });
 
 Route::prefix('blog')->name('blog.')->group(function () {

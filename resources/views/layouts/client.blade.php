@@ -72,7 +72,6 @@
 	
  <!--===============================================================================================-->
 	 <script src="{{asset('/Themes/vendor/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
-	<script src="{{asset('/Themes/js/main.js')}}"></script>
 
     @yield('js')
 	<script>
@@ -105,6 +104,7 @@
 		
 		</script>
 
+<script src="{{asset('/Themes/js/main.js')}}"></script>
 
 
 </body>

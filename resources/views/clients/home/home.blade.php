@@ -235,7 +235,7 @@
                     },
 					dataType: "json",
 					success: function (response) {
-						console.log(response.length);
+						console.log(response);
 						let count = 0;
 						let sumMoney = 0;
 						container.innerHTML = '';

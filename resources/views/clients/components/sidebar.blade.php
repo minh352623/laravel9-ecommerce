@@ -46,7 +46,7 @@
                         Help & FAQs
                     </a>
                 </li>
-                @if (Auth::user()->id == 1)
+                @if (Auth::user() && Auth::user()->id == 1)
                 <li class="p-b-13">
                     <a href="/admin" class="stext-102 cl2 hov-cl1 trans-04">
                        Admin

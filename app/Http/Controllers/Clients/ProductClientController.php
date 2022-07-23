@@ -33,4 +33,12 @@ class ProductClientController extends Controller
         // dd($product);
         return response()->json($data);
     }
+
+    public function detail($id, Request $request)
+    {
+
+        $product = Products::find($id);
+        $listRelated  = Products::paginate(8);
+        return view('clients.products.detail', compact('product', 'listRelated'));
+    }
 }
