@@ -248,17 +248,21 @@
     /*==================================================================
     [ Show modal1 ]*/
 
-    let items = document.querySelectorAll(".item-slick3");
-    let name = document.querySelector(".js-name-detail");
-    let price = document.querySelector(".js-price-detail");
-    let description = document.querySelector(".js-desciption-detail");
+    let items = document.querySelectorAll(".wrap-modal1 .item-slick3");
+    let name = document.querySelector(".wrap-modal1 .js-name-detail");
+    console.log(name);
+    let price = document.querySelector(".wrap-modal1 .js-price-detail");
+    let description = document.querySelector(
+        ".wrap-modal1 .js-desciption-detail"
+    );
 
     $(".js-show-modal1").on("click", function (e) {
         e.preventDefault();
         let url = $(this).attr("href");
         let index = url.lastIndexOf("/");
         let id = url.slice(index + 1);
-        document.querySelector(".js-addcart-detail").dataset.id = id;
+        document.querySelector(".wrap-modal1 .js-addcart-detail").dataset.id =
+            id;
         // $('.js-addcart-detail').data('id') =
         $.ajax({
             url: $(this).attr("href"),

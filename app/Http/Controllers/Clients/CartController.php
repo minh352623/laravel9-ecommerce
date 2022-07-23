@@ -16,7 +16,7 @@ class CartController extends Controller
         // $request->session()->forget('cart');
         $item = Products::find($request->id);
         $cart = Session::get('cart');
-        if (is_null($cart)) {
+        if (is_null($cart) || empty($cart)) {
             $item->number = $request->number;
             $item->total = (int)($request->number) * (float)($item->price);
             $cart = [];
@@ -48,6 +48,28 @@ class CartController extends Controller
             }
         }
 
+        Session::put('cart', $cart);
+        $cart = Session::get('cart');
+        return response()->json($cart);
+    }
+
+    public function remove(Request $request)
+    {
+        $cart = Session::get('cart');
+        if (is_null($cart)) {
+        } else {
+            if (!empty($cart)) {
+                $keyRemove = -1;
+                foreach ($cart as $key => $item) {
+                    if ($item->id == $request->id) {
+                        $keyRemove = $key;
+                    }
+                }
+                if ($keyRemove > -1) {
+                    array_splice($cart, $keyRemove, 1);
+                }
+            }
+        }
         Session::put('cart', $cart);
         $cart = Session::get('cart');
         return response()->json($cart);

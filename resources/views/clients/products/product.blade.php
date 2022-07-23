@@ -2,10 +2,11 @@
 @section('title')
     <title>Sản Phẩm</title>
 @endsection
+
 @section('header')
 @include('clients.components.headerV4')
-	
 @endsection
+
 @section('content')
     @include('clients.components.product')
     
