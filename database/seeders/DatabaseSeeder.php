@@ -59,23 +59,58 @@ class DatabaseSeeder extends Seeder
         // }
 
 
+        // DB::table('modules')->insert([
+        //     'name' => 'users',
+        //     'title' => 'Quản lí người dùng',
+        //     'created_at' => date('Y-m-d H:i:s'),
+        //     'updated_at' => date('Y-m-d H:i:s'),
+
+        // ]);
+        // DB::table('modules')->insert([
+        //     'name' => 'groups',
+        //     'title' => 'Quản lí nhóm người dùng',
+        //     'created_at' => date('Y-m-d H:i:s'),
+        //     'updated_at' => date('Y-m-d H:i:s'),
+
+        // ]);
+        // DB::table('modules')->insert([
+        //     'name' => 'posts',
+        //     'title' => 'Quản lí bài viết',
+        //     'created_at' => date('Y-m-d H:i:s'),
+        //     'updated_at' => date('Y-m-d H:i:s'),
+
+        // ]);
         DB::table('modules')->insert([
-            'name' => 'users',
-            'title' => 'Quản lí người dùng',
+            'name' => 'menus',
+            'title' => 'Menu',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
 
         ]);
         DB::table('modules')->insert([
-            'name' => 'groups',
-            'title' => 'Quản lí nhóm người dùng',
+            'name' => 'categories',
+            'title' => 'Danh mục sản phẩm',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
 
         ]);
         DB::table('modules')->insert([
-            'name' => 'posts',
-            'title' => 'Quản lí bài viết',
+            'name' => 'products',
+            'title' => 'Sản phẩm',
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+
+        ]);
+        DB::table('modules')->insert([
+            'name' => 'settings',
+            'title' => 'Cài đặt',
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+
+        ]);
+        DB::table('modules')->insert([
+            'name' => 'sliders',
+            'title' => 'Slider',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
 

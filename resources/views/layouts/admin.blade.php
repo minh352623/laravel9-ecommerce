@@ -16,10 +16,11 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <!-- Custom styles for this template-->
     <link href="{{asset('assets/admins')}}/css/sb-admin-2.min.css" rel="stylesheet">
-
+    @yield('css')
 </head>
 
 <body id="page-top">
@@ -116,9 +117,87 @@
                 </div>
             </li>
             @endcan
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_cate"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Danh mục sản phẩm</span>
+                </a>
+                <div id="collapse_cate" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('admin.category.index')}}">Danh sách</a>
+                        @can('categories.add') 
 
-           
+                        <a class="collapse-item" href="{{route('admin.category.add')}}">Thêm mới</a>
+                        @endcan
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_menu"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Menus</span>
+                </a>
+                <div id="collapse_menu" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('admin.menu.index')}}">Danh sách</a>
+                        @can('menus.add') 
 
+                        <a class="collapse-item" href="{{route('admin.menu.add')}}">Thêm mới</a>
+                        @endcan
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_pro"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Danh sách sản phẩm</span>
+                </a>
+                <div id="collapse_pro" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('admin.products.index')}}">Danh sách</a>
+                        @can('products.add') 
+
+                        <a class="collapse-item" href="{{route('admin.products.add')}}">Thêm mới</a>
+                        @endcan
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_slider"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Danh sách slider</span>
+                </a>
+                <div id="collapse_slider" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('admin.slider.index')}}">Danh sách</a>
+                        @can('sliders.add') 
+
+                        <a class="collapse-item" href="{{route('admin.slider.add')}}">Thêm mới</a>
+                        @endcan
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_setting"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Cài đặt chung</span>
+                </a>
+                <div id="collapse_setting" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('admin.setting.index')}}">Danh sách</a>
+                        @can('settings.add') 
+
+                        <a class="collapse-item" href="{{route('admin.setting.add')}}">Thêm mới</a>
+                        @endcan
+                    </div>
+                </div>
+            </li>
         </ul>
         <!-- End of Sidebar -->
 
@@ -244,7 +323,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                        <img class="rounded-circle" src="{{asset('assets/admins/img')}}/undraw_profile_1.svg"
                                             alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
@@ -256,7 +335,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                        <img class="rounded-circle" src="{{asset('assets/admins/img')}}/undraw_profile_2.svg"
                                             alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
@@ -268,7 +347,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                        <img class="rounded-circle" src="{{asset('assets/admins/img')}}/undraw_profile_3.svg"
                                             alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
@@ -302,7 +381,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth::user()->name}}</span>
                                 <img class="img-profile rounded-circle"
-                                    src="{{asset('assets/admins')}}/img/undraw_profile.svg">
+                                    src="{{asset('assets/admins/img')}}/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -388,7 +467,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js" integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {{-- <script src="{{asset('assets/admins')}}/vendor/jquery/jquery.min.js"></script> --}}
     <script src="{{asset('assets/admins')}}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <!-- Core plugin JavaScript-->
     {{-- <script src="{{asset('assets/admins')}}/vendor/jquery-easing/jquery.easing.min.js"></script> --}}
 
@@ -396,11 +476,12 @@
     <script src="{{asset('assets/admins')}}/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="{{asset('assets/admins')}}/vendor/chart/Chart.min.js"></script>
+    {{-- <script src="{{asset('assets/admins')}}/vendor/chart/Chart.min.js"></script>s --}}
 
     <!-- Page level custom scripts -->
-    <script src="{{asset('assets/admins')}}/js/demo/chart-area-demo.js"></script>
-    <script src="{{asset('assets/admins')}}/js/demo/chart-pie-demo.js"></script>
+    {{-- <script src="{{asset('assets/admins')}}/js/demo/chart-area-demo.js"></script>
+    <script src="{{asset('assets/admins')}}/js/demo/chart-pie-demo.js"></script> --}}
+    @yield('script')
 
 </body>
 

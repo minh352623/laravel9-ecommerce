@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    const PER_PAGE = 3;
+    const PER_PAGE = 5;
     //
     public function index()
     {

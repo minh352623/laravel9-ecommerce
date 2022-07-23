@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
-    const PER_PAGE = 2;
+    const PER_PAGE = 5;
     //
     public function index()
     {
@@ -129,8 +129,8 @@ class GroupController extends Controller
     {
         // dd($group);
         $this->authorize('permissions', $group);
-
         if (!empty($request->role)) {
+            // dd($request->role);
 
             $roleArr = $request->role;
             // dd($roleArr);
@@ -139,8 +139,8 @@ class GroupController extends Controller
         }
 
         $roleJson = json_encode($roleArr);
-        // dd($roleJson);
         $group->permissions = $roleJson;
+        // dd($group->permissions);
         $group->save();
 
         return back()->with('msg', 'Phân quyền thành công!');

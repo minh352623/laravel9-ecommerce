@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
 class UsersController extends Controller
 {
     //
-    const PER_PAGE = 2;
+    const PER_PAGE = 5;
     public function __construct()
     {
     }

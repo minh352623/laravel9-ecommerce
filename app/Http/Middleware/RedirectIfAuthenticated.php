@@ -23,7 +23,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::ADMIN);
+                return redirect(RouteServiceProvider::HOME); //nếu đăng nhập r mà lại vào trang login thì sẽ chuyển về trang chủ
             }
         }
 
