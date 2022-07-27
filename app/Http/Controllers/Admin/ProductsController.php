@@ -25,11 +25,23 @@ class ProductsController extends Controller
     use StorageImageTrait;
     const PER_PAGE = 3;
 
-    public function index()
+    public function index(Request $request)
     {
-        $lists = Products::orderBy('created_at', 'desc')->paginate(self::PER_PAGE);
-
-        return view('admin.products.lists', compact('lists'));
+        $category = Category::all();
+        $lists = DB::table('products')
+            ->select('products.*', 'categories.name as name_cate')
+            ->join('categories', 'categories.id', '=', 'products.category_id');
+        if ($request->cate) {
+            $lists = $lists->where('categories.id', '=', $request->cate);
+        }
+        if ($request->keyword) {
+            $keyword = $request->keyword;
+            $lists = $lists->where(function ($query) use ($keyword) {
+                $query->orWhere('products.name', 'like', '%' . $keyword . '%');
+            });
+        }
+        $lists = $lists->paginate(self::PER_PAGE);
+        return view('admin.products.lists', compact('lists', 'category'));
     }
     public function add()
     {

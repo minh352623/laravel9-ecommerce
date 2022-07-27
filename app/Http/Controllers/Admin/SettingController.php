@@ -11,7 +11,7 @@ class SettingController extends Controller
 {
     //
 
-    const PER_PAGE = 5;
+    const PER_PAGE = 6;
     //
     public function index()
     {

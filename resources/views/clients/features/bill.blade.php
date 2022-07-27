@@ -48,8 +48,10 @@
       
         <div class="row">
             <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
-               
+             
                 <div class="m-l-25 m-r--38 m-lr-0-xl">
+                    <h2 class="message-check font-weight-bold mb-2">Đặt hàng thành công!</h2>
+                    <p class="title-check text-success mb-3">Cảm ơn quý khách đã tin tưởng và đặt hàng của chúng tôi!</p>
                     <div class="wrap-table-shopping-cart">
                         <table class="table-shopping-cart">
                             <thead class="table_head">
@@ -58,42 +60,40 @@
                                 <th class="column-3">Price</th>
                                 <th class="column-4">Quantity</th>
                                 <th class="column-5">Total</th>
-                                <th class="column-0">Action</th>
 
                             </thead>
                             <tbody class="tbody-shopping">
                                 @php
                                     $sum =0;
                                 @endphp
-                                @if (session('cart'))
+                                @if ($bill->detailBill)
                             
-                                    @foreach (session('cart') as $item)
+                                    @foreach ($bill->detailBill as $item)
                                         @php
                                             $sum+=(float)($item->total);
                                         @endphp
                                         <tr class="table_row">
                                             <td class="column-1">
                                                 <div class="how-itemcart1">
-                                                    <img src="{{asset($item->feature_image_path)}}" alt="IMG">
+                                                    <img src="{{asset($item->image)}}" alt="IMG">
                                                 </div>
                                             </td>
-                                            <td class="column-2">{{$item->name}}</td>
+                                            <td class="column-2">{{$item->name_pro}}</td>
                                             <td class="column-3">$ {{$item->price}}</td>
                                             <td class="column-4">
                                                 <div class="wrap-num-product flex-w m-l-auto m-r-0" data-id={{$item->id}}>
-                                                    <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" data-url="{{route('cart.add')}}">
+                                                    {{-- <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" data-url="{{route('cart.add')}}">
                                                         <i class="fs-16 zmdi zmdi-minus"></i>
-                                                    </div>
+                                                    </div> --}}
             
                                                     <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product-{{$item->id}}" value="{{$item->number}}">
             
-                                                    <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" data-url="{{route('cart.add')}}">
+                                                    {{-- <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" data-url="{{route('cart.add')}}">
                                                         <i class="fs-16 zmdi zmdi-plus"></i>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </td>
                                             <td class="column-5">$ {{$item->total}}</td>
-                                            <td class="column-0" data-url="{{route('cart.remove')}}" data-id="{{$item->id}}" style="text-align:center"><i style="font-size:25px;" class="remove-item fa fa-trash" aria-hidden="true"></i></td>
 
                                         </tr>
                                     @endforeach
@@ -102,7 +102,7 @@
                         </table>
                     </div>
 
-                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                    {{-- <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
                         <div class="flex-w flex-m m-r-20 m-tb-5">
                             <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
                                 
@@ -114,7 +114,7 @@
                         <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
                             Update Cart
                         </div>
-                    </div>
+                    </div> --}}
                     <style>
                         .return-product{
                             width: 200px;
@@ -164,11 +164,11 @@
                                 </span>
 
                                 <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                                    <select class="js-select2" name="time">
+                                    <select class="js-select2" name="time" disabled>
                                         <option value ="0">Select a country...</option>
-                                        <option value="vietnam">Việt Nam</option>
-                                        <option value="usa">USA</option>
-                                        <option value="uk">UK</option>
+                                        <option value="vietnam" {{$bill->country == 'vietname' ? 'selected':false}}>Việt Nam</option>
+                                        <option value="usa" {{$bill->country == 'usa' ? 'selected':false}}>USA</option>
+                                        <option value="uk" {{$bill->country == 'uk' ? 'selected':false}}>UK</option>
 
                                     </select>
 
@@ -184,7 +184,7 @@
 
                                 </div>
                                 <div class="bor8 bg0 m-b-12">
-                                    <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="address" placeholder="Address">
+                                    <input class="stext-111 cl8 plh3 size-111 p-lr-15" disabled value="{{$bill->address}}" type="text" name="address" placeholder="Address">
                                    
                                 </div>
                                 <div class="text-danger error-address ">
@@ -192,17 +192,17 @@
                                 </div>
 
                                 <div class="bor8 bg0 m-b-22">
-                                    <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="phone" placeholder="phone">
+                                    <input class="stext-111 cl8 plh3 size-111 p-lr-15" disabled value="{{$bill->tel}}" type="text" name="phone" placeholder="phone">
                                  
                                 </div>
                                 <div class="text-danger error-phone ">
 
                                 </div>
-                                <div class="flex-w">
+                                {{-- <div class="flex-w">
                                     <div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
                                         Update Totals
                                     </div>
-                                </div>
+                                </div> --}}
                                     
                             </div>
                         </div>
@@ -221,12 +221,10 @@
                             </span>
                         </div>
                     </div>
-                    @if (!empty(session('cart')))
-                        <button type="submit" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-                            Proceed to Checkout
-                        </button>
-                        
-                    @endif
+
+                    {{-- <button type="submit" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                        Proceed to Checkout
+                    </button> --}}
                 </div>
             </div>
         </div>
@@ -491,23 +489,17 @@
 					dataType: "json",
 					success: function (response) {
 						console.log(response);
-                        if(response.length <= 0){
-                            $('button[type="submit"]').hide();
-                        }
 						let count = 0;
 						let sumMoney = 0;
 						container.innerHTML = '';
                         bodyShopping.innerHTML = '';
-                        if(response){
-                            response.forEach((item,index)=>{
-                                item.total = +(item.total).toFixed(2);
-                                count +=+item.number;
-                                sumMoney+=(+item.price)*(+item.number);
-                                redderItemCart(item);
-                                renderItemCartPage(item,url,urlButton);
-                            })
-
-                        }
+						response.forEach((item,index)=>{
+                            item.total = +(item.total).toFixed(2);
+							count +=+item.number;
+							sumMoney+=(+item.price)*(+item.number);
+							redderItemCart(item);
+                            renderItemCartPage(item,url,urlButton);
+						})
 						headerCartTotal.textContent = 'Total: $ '+sumMoney.toFixed(2);
                         cartSumPage.forEach((item,key)=>{
                             if(key ==0){
@@ -541,62 +533,6 @@
         table.addEventListener('click',handleRemoveItem);
 </script>
 
-<script>
-    // checkout
-    
-    let formCheckOut = document.querySelector('.form-checkout');
-    formCheckOut.addEventListener('submit',function(e){
-        e.preventDefault();
-        let url = this.getAttribute('action');
-        let csrfToken = $(this).find('input[name="_token"]').val();
-        let country = $(this).find('select[name="time"]').val();
-        let address = $(this).find('input[name="address"]').val();
-        let phone = $(this).find('input[name="phone"]').val();
-        let errorCountry = document.querySelector('.error-country');
-        let errorAddress = document.querySelector('.error-address');
-        let errorPhone = document.querySelector('.error-phone');
-       
 
-        // alert(address);
-        $.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
-        $.ajax({
-            url:url,
-            type: "POST",
-			data:{
-                country:country,
-                address:address,
-                phone:phone,
-
-            },
-			dataType: "json",
-			success: function (response) {
-                errorCountry.textContent = '';
-                errorAddress.textContent = '';
-                errorPhone.textContent = '';
-
-                if(Object.keys(response).length>0){
-                    // console.log(response['href']+'/'+response['id_bill']);
-                    window.location.href = response['href'];
-                }
-            },
-            error: function (e){
-                let errors = e.responseJSON.errors;
-                // console.log(e.responseJSON.errors);
-                if(Object.keys(errors).length>0){
-                    for(let key in errors){
-                        $('.error-'+key).text(errors[key][0]);
-                    }
-
-                }
-            }
-
-        });
-    })
-
-</script>
 
 @endsection

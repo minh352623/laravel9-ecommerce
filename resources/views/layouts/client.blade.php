@@ -68,8 +68,10 @@
  <!--===============================================================================================-->
  <script src="{{asset('/Themes/vendor/isotope/isotope.pkgd.min.js')}}"></script>
  <!--===============================================================================================-->
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 	 <script src="{{asset('/Themes/vendor/sweetalert/sweetalert.min.js')}}"></script>
-	
+	 {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
  <!--===============================================================================================-->
 	 <script src="{{asset('/Themes/vendor/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
 

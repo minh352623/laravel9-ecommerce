@@ -2,41 +2,22 @@
 
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
+    <h1 class="h3 mb-0 text-gray-800">Danh sách đơn hàng</h1>
 </div>
 
-@can('products.add') 
-<span><a href="{{route('admin.products.add')}}" class="btn btn-primary mb-3">Thêm mới</a></span>
-@endcan
-<span><a href="{{route('admin.products.trash')}}" class="btn btn-success mb-3">Thùng rác</a></span>
 
 @if (session('msg'))
     <div class="alert alert-success">{{session('msg')}}</div>
 @endif
-@section('css')
-
-<style>
-
-    img{
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-</style>
-    
-@endsection
 <form action="" class="mb-1" method="get">
     <div class="row">
         <div class="col-4">
-            <select name="cate" class="form-control">
+            <select name="status" class="form-control">
                 <option value="0">Tất cả trạng thái</option>
-                @if ($category)
-                    @foreach ($category as $item)
-                        
-                    <option value="{{$item->id}}" {{request()->cate && request()->cate == $item->id ?'selected':false}}>{{$item->name}}</option>
-                    @endforeach
-                @endif
+                <option value="3" {{request()->status && request()->status == 3 ?'selected':false}}>Đang chờ duyệt</option>
+                <option value="1" {{request()->status && request()->status == 1 ?'selected':false}}>Đang giao</option>
 
+                <option value="2" {{request()->status == 2 ?'selected':false}}>Đã giao</option>
 
             </select>
         </div>
@@ -51,46 +32,48 @@
 </form>
 <table class="table table-bordered">
     <thead>
-        <tr class='text-center  font-weight-bold'>
-            <td style="width:5%">Stt</td>
-            <td>Tên sản phẩm</td>
-            <td width="25%" >Hình sản phẩm</td>
-            <td style="width:15%">Giá sản phẩm</td>
-            <td style="width:15%">Danh mục sản phẩm</td>
-
-            @can('products.edit') 
-            <td style="width:5%">Sửa</td>
-            @endcan
-            @can('products.delete') 
-            <td style="width:5%">Xóa</td>
-            @endcan
+        <tr class='text-center font-weight-bold'>
+            <td style="width:5%">ID</td>
+            <td style="width:30%">Thông tin</td>
+            <td>Tổng tiền</td>
+            <td>Trạng thái</td>
+            <td>Ngày đặt hàng</td>
+            <td style="width:13%">Xem chi tiết</td>
         </tr>
     </thead>
     <tbody>
-        @if ($lists->count()>0)
-            @foreach ($lists as $key=>$item)
+        @if ($bills->count()>0)
+            @foreach ($bills as $key=>$item)
+                @php
+                    // dd($item);
+                @endphp
                 <tr class="text-center mt-auto">
-                    <td>{{$key+1}}</td>
-                    <td class="font-weight-bold text-info">{{$item->name}}</td>
-                    <td height="180px"><img src="{{$item->feature_image_path}}" alt=""></td>
-                    <td class=" text-danger">${{($item->price)}}</td>
-                    <td>{{optional($item)->category_id}}</td>
-
-                    @can('products.edit') 
-                    <td>
-                        <a href="{{route('admin.products.edit',$item->id)}}" class="btn btn-warning">Sửa</a>
-                    </td>
-                    @endcan
-
-                    @can('products.delete') 
-                    <td>
-                        {{-- @if (Auth::user()->id !== $item->id) --}}
-                        
-                        <a  href="{{route('admin.products.delete',$item->id)}}" class="btn btn-danger action_delete">Xóa</a>
-                        {{-- @endif --}}
+                    <td>{{$item->id}}</td>
+                    <td class="font-weight-bold text-start text-info">
+                       Tên: <span class="text-dark"> {{  $item->name_user }}</span>
+                        <br/>
+                      Email:  <span class="text-dark"> {{ $item->email_user }}</span>
+                        <br/>
+                       Số điện thoại:<span class="text-dark"> {{$item->tel}}</span>
+                        <br/>
+                       Địa chỉ: <span class="text-dark"> {{$item->address}}</span>
 
                     </td>
-                    @endcan
+                    <td class="font-weight-bold text-primary">${{$item->total}}</td>
+                    <td>
+                        <div class="flex-c-m stext-101 cl2 p-2 rounded text-light size-119 bg-{{$item->status == 0 ? 'warning': ($item->status == 1?'info':'success')}} bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+                            {{getStatusBillVn($item->status)}}
+                        </div>
+                    </td>
+                    <td>
+                        {{$item->created_at}}
+                    </td>
+                    <td>
+                            
+                                <a href="{{route('admin.orders.edit',$item->id)}}" class="btn btn-secondary">Xem chi tiết</a>
+                                
+                    </td>
+
                 </tr>
         @endforeach
 
@@ -100,7 +83,7 @@
 </table>
 <div class="d-flex justify-content-end">
 
-    {{ $lists->withQueryString()->links() }}
+    {{ $bills->withQueryString()->links() }}
 </div>
 @endsection
 
@@ -141,7 +124,7 @@
             })
           
         }
-    })
+})
     };
     $(function(){
         $(document).on('click','.action_delete',actionDelete);

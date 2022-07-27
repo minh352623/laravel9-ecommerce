@@ -12,15 +12,25 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ContactAdminController;
+use App\Http\Controllers\Admin\CommentAdminController;
+
+
+
 
 //client
 use App\Http\Controllers\Clients\HomeController;
 use App\Http\Controllers\Clients\ProductClientController;
 use App\Http\Controllers\Clients\CartController;
 use App\Http\Controllers\Clients\FeaturesController;
+use App\Http\Controllers\Clients\CommentController;
+use App\Http\Controllers\Clients\ContactController;
+use App\Http\Controllers\Clients\AboutController;
+use App\Http\Controllers\Clients\BlogController;
+
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-
 use App\Models\Posts;
 use App\Models\User;
 use App\Models\Menu;
@@ -44,43 +54,53 @@ use Laravel\Socialite\Facades\Socialite;
 |
 */
 //forntend
+Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
 Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('home');
+
 
 Route::prefix('product')->name('product.')->group(function () {
     Route::get('/', [ProductClientController::class, 'index'])->name('index');
     Route::get('/show/{id}', [ProductClientController::class, 'showProductGlobal'])->name('show');
     Route::get('/detail/{id}', [ProductClientController::class, 'detail'])->name('detail');
 });
-Route::prefix('cart')->name('cart.')->group(function () {
+Route::prefix('cart')->name('cart.')->middleware('auth')->group(function () {
 
     Route::post('/add', [CartController::class, 'add'])->name('add');
+
     Route::post('/remove', [CartController::class, 'remove'])->name('remove');
 });
 
 
-Route::prefix('features')->name('features.')->group(function () {
+Route::prefix('features')->name('features.')->middleware('auth')->group(function () {
     Route::get('/', [FeaturesController::class, 'index'])->name('index');
+
+    Route::get('/bill/{id}', [FeaturesController::class, 'bill'])->name('bill');
+
+    Route::post('/checkout', [FeaturesController::class, 'checkout'])->name('checkout');
+
+    Route::get('/mybill', [FeaturesController::class, 'mybill'])->name('mybill');
+
+    Route::get('/delete/{id}', [FeaturesController::class, 'delete'])->name('delete');
 });
 
-Route::prefix('blog')->name('blog.')->group(function () {
-    Route::get('/', function () {
-        return 'blog';
-    })->name('index');
+Route::prefix('blog')->name('blog.')->middleware('auth')->group(function () {
+    Route::get('/', [BlogController::class, 'index'])->name('index');
 });
 
-Route::prefix('about')->name('about.')->group(function () {
-    Route::get('/', function () {
-        return 'about';
-    })->name('index');
+Route::prefix('about')->name('about.')->middleware('auth')->group(function () {
+    Route::get('/', [AboutController::class, 'index'])->name('index');
 });
 
 
-Route::prefix('contact')->name('contact.')->group(function () {
-    Route::get('/', function () {
-        return 'contact';
-    })->name('index');
+Route::prefix('contact')->name('contact.')->middleware('auth')->group(function () {
+    Route::get('/', [ContactController::class, 'index'])->name('index');
+    Route::post('/add', [ContactController::class, 'add'])->name('add');
 });
 
+
+Route::prefix('comments')->name('comments.')->middleware('auth')->group(function () {
+    Route::post('/add', [CommentController::class, 'add'])->name('add');
+});
 //end forntend
 
 
@@ -270,5 +290,19 @@ Route::prefix('admin')->middleware('auth', 'verified')->name('admin.')->group(fu
         Route::get('/restore/{id}', [SettingController::class, 'restore'])->name('restore');
 
         Route::get('/forceDelete/{id}', [SettingController::class, 'forceDelete'])->name('forceDelete');
+    });
+
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::get('/edit/{order}', [OrderController::class, 'edit'])->name('edit');
+        Route::post('/changeStatus', [OrderController::class, 'changeStatus'])->name('changeStatus');
+    });
+
+    Route::prefix('contact')->name('contact.')->group(function () {
+        Route::get('/', [ContactAdminController::class, 'index'])->name('index');
+    });
+    Route::prefix('comments')->name('comments.')->group(function () {
+        Route::get('/', [CommentAdminController::class, 'index'])->name('index');
+        Route::get('/delete/{id}', [CommentAdminController::class, 'delete'])->name('delete');
     });
 });

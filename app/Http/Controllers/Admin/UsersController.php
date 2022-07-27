@@ -9,6 +9,7 @@ use App\Models\Groups;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -18,11 +19,25 @@ class UsersController extends Controller
     public function __construct()
     {
     }
-    public function index()
+    public function index(Request $request)
     {
-        $lists = User::paginate(self::PER_PAGE);
+        $groups = Groups::all();
+        $lists = DB::table('users')
+            ->select('users.*', 'groups.name as name_group')
+            ->join('groups', 'groups.id', '=', 'users.group_id');
 
-        return view('admin.users.lists', compact('lists'));
+        if ($request->group) {
+            $lists = $lists->where('groups.id', $request->group);
+        }
+        if ($request->keyword) {
+            $keyword = $request->keyword;
+            $lists = $lists->where(function ($query) use ($keyword) {
+                $query->orWhere('users.name', 'like', '%' . $keyword . '%');
+                $query->orWhere('users.email', 'like', '%' . $keyword . '%');
+            });
+        }
+        $lists = $lists->paginate(self::PER_PAGE);
+        return view('admin.users.lists', compact('lists', 'groups'));
     }
     public function add()
     {
