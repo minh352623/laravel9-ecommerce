@@ -17,9 +17,11 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 <!-- CSS only -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <!-- Custom styles for this template-->
     <link href="{{asset('assets/admins')}}/css/sb-admin-2.min.css" rel="stylesheet">
+
     @yield('css')
 </head>
 
@@ -29,6 +31,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
+    
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -63,7 +66,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fa-regular fa-address-card"></i>
                     <span>Bài Viết</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -83,7 +86,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_groups"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fa-solid fa-users-line"></i>
                     <span>Nhóm người dùng</span>
                 </a>
                 <div id="collapse_groups" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -102,7 +105,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_user"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fa-regular fa-user"></i>
                     <span>Người dùng</span>
                 </a>
                 <div id="collapse_user" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -120,7 +123,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_cate"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fa-solid fa-list"></i>
                     <span>Danh mục sản phẩm</span>
                 </a>
                 <div id="collapse_cate" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -136,7 +139,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_menu"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fa-solid fa-bars"></i>
                     <span>Menus</span>
                 </a>
                 <div id="collapse_menu" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -152,7 +155,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_pro"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fa-solid fa-cookie-bite"></i>
                     <span>Danh sách sản phẩm</span>
                 </a>
                 <div id="collapse_pro" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -169,7 +172,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_slider"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fa-brands fa-slideshare"></i>
                     <span>Danh sách slider</span>
                 </a>
                 <div id="collapse_slider" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -195,6 +198,42 @@
 
                         <a class="collapse-item" href="{{route('admin.setting.add')}}">Thêm mới</a>
                         @endcan
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_order"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fa-solid fa-money-bill-1-wave"></i>
+                    <span>Quản lí đơn hàng</span>
+                </a>
+                <div id="collapse_order" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('admin.orders.index')}}">Danh sách</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_contact"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fa-solid fa-address-card"></i>
+                    <span>Quản lí liên hệ</span>
+                </a>
+                <div id="collapse_contact" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('admin.contact.index')}}">Danh sách</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_comment"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fa-solid fa-comment"></i>
+                    <span>Quản lí bình luận</span>
+                </a>
+                <div id="collapse_comment" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('admin.comments.index')}}">Danh sách</a>
                     </div>
                 </div>
             </li>

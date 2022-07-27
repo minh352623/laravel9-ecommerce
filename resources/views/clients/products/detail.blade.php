@@ -8,6 +8,8 @@
 @endsection
 
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+
 <!-- breadcrumb -->
 <div class="container">
     <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
@@ -179,6 +181,21 @@
 								<i class="fa fa-google-plus"></i>
 							</a>
 						</div>
+						<div class="p-t-20">
+							<h4 class="mtext-112 cl2 p-b-27">
+								Tags
+							</h4>
+
+							<div class="flex-w m-r--5">
+								@if ($product->tags->count()>0)
+									@foreach ($product->tags as $item)
+										<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+											{{$item->name}}
+										</a>
+									@endforeach
+								@endif
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -197,7 +214,7 @@
 						</li>
 
 						<li class="nav-item p-b-10">
-							<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
+							<a class="nav-link review-count" data-toggle="tab" href="#reviews" role="tab">Reviews ({{$comments->count()}})</a>
 						</li>
 					</ul>
 
@@ -276,35 +293,58 @@
 							<div class="row">
 								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
 									<div class="p-b-30 m-lr-15-sm">
-										<!-- Review -->
-										<div class="flex-w flex-t p-b-68">
-											<div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-												<img src="{{asset('Themes/images/avatar-01.jpg')}}" alt="AVATAR">
-											</div>
 
-											<div class="size-207">
-												<div class="flex-w flex-sb-m p-b-17">
-													<span class="mtext-107 cl2 p-r-20">
-														Ariana Grande
-													</span>
+										<div class="container-review">
+											<!-- Review -->
 
-													<span class="fs-18 cl11">
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star-half"></i>
-													</span>
-												</div>
+											@if ($comments->count()>0)
+												@foreach ($comments as $item)
+													<div class="flex-w flex-t p-b-68">
+														<div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
+															<img src="{{$item->user->image?asset('Themes/images/avatar-01.jpg'):'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}}" alt="AVATAR">
+														</div>
+			
+														<div class="size-207">
+															<div class="flex-w flex-sb-m p-b-17">
+																<span class="mtext-107 cl2 p-r-20">
+																	{{$item->user->name}}
+																</span>
+			
+																<span class="fs-18 cl11">
+																	@if ($item->rating > 0)
+																		@for ($i = 1;$i <= 5; $i++)
+																			@if ($i<=$item->rating)
+																				<i class="zmdi zmdi-star"></i>
+																				
+																			@else
+																				<i class="zmdi zmdi-star-outline"></i>
 
-												<p class="stext-102 cl6">
-													Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
-												</p>
-											</div>
+																			@endif
+																			
+																		@endfor
+																	@endif
+																	{{-- <i class="zmdi zmdi-star"></i>
+																	<i class="zmdi zmdi-star"></i>
+																	<i class="zmdi zmdi-star"></i>
+																	<i class="zmdi zmdi-star-half"></i> --}}
+																</span>
+															</div>
+															<div class="info-comment d-flex justify-content-between">
+																<p class="stext-102 cl6">
+																	{{$item->message}}
+																</p>
+																<span>{{Carbon\Carbon::create($item->created_at)->toDayDateTimeString()}}</span>
+															</div>
+														</div>
+													</div>
+												@endforeach
+											@endif
+											
+									
 										</div>
 										
 										<!-- Add review -->
-										<form class="w-full">
+										<form class="w-full form-comments" action="{{route('comments.add')}}" method="post">
 											<h5 class="mtext-108 cl2 p-b-7">
 												Add a review
 											</h5>
@@ -331,10 +371,10 @@
 											<div class="row p-b-25">
 												<div class="col-12 p-b-5">
 													<label class="stext-102 cl3" for="review">Your review</label>
-													<textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
+													<input class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review">
 												</div>
 
-												<div class="col-sm-6 p-b-5">
+												{{-- <div class="col-sm-6 p-b-5">
 													<label class="stext-102 cl3" for="name">Name</label>
 													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name">
 												</div>
@@ -342,10 +382,10 @@
 												<div class="col-sm-6 p-b-5">
 													<label class="stext-102 cl3" for="email">Email</label>
 													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="email">
-												</div>
+												</div> --}}
 											</div>
 
-											<button class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
+											<button data-id="{{$product->id}}" type="submit" class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
 												Submit
 											</button>
 										</form>
@@ -590,4 +630,113 @@
          });
      </script>
 
+	<script>
+		let formComment= document.querySelector('.form-comments');
+		let containerComment = document.querySelector('.container-review');
+
+		function renderComment(item){
+			let template = `
+			<div class="flex-w flex-t p-b-68">
+														<div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
+															<img src="${item.avatar?item.avatar:'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}" alt="AVATAR">
+														</div>
+			
+														<div class="size-207">
+															<div class="flex-w flex-sb-m p-b-17">
+																<span class="mtext-107 cl2 p-r-20">
+																	${item.name_user}
+																</span>
+			
+																<span class="fs-18 cl11">`;
+																	if (item.rating > 0){
+																		for (let i = 1;i <= 5; i++){
+																			if (i<=item.rating){
+
+																				template += '<i class="zmdi zmdi-star"></i>';
+																			}else{
+
+																				template +='<i class="zmdi zmdi-star-outline"></i>';
+																			}
+																				
+																
+																		}
+																			
+																		
+																	}
+																		
+												template +=					
+																`
+																</span>
+															</div>
+															<div class="info-comment d-flex justify-content-between">
+																<p class="stext-102 cl6">
+																	${item.message}
+																</p>
+																<span>${moment(item.created_at).format('llll')}</span>
+															</div>
+														</div>
+													</div>
+			`;
+			containerComment.insertAdjacentHTML('afterbegin',template);
+			}
+
+		formComment.addEventListener('submit',function(e){
+			e.preventDefault();
+
+			let url = this.getAttribute('action');
+			let message = this.querySelector('input[name="review"]').value.trim();
+			let reating = this.querySelectorAll('.zmdi-star').length;
+			let productId = this.querySelector('button[type="submit"]').dataset.id;
+			if(reating>0 && message != ''){
+				$.ajaxSetup({
+                     headers: {
+                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                     }
+				});
+				$.ajax({
+						url: url,
+						type: "POST",
+						data:{
+							productId:productId,
+							rating:+reating,
+							message:message
+						},
+						dataType: "json",
+						success: function (response) {
+							console.log(response);
+							containerComment.innerHTML = '';
+							(response).forEach((item,index)=>{
+								// JSON.parse(item)
+								renderComment(item);
+
+							});
+							$('.review-count').text('Review ('+response.length+')');
+
+
+
+							Swal.fire({
+								position: 'bottom-end',
+								icon: 'success',
+								title: 'Add comment success',
+								showConfirmButton: false,
+								timer: 500
+							});
+							formComment.reset();
+						},
+						error: function(e){
+							console.log('lỗi');
+						}
+					})
+			}else{
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: 'please choose the number of stars & comment!',
+					footer: '<a href="">Why do I have this issue?</a>'
+				})
+			}
+			// console.log(message,reating,productId);
+		
+		});
+	</script>
 @endsection

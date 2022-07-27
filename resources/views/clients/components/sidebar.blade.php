@@ -12,7 +12,7 @@
         <div class="sidebar-content flex-w w-full p-lr-65 js-pscroll">
             <ul class="sidebar-link w-full">
                 <li class="p-b-13">
-                    <a href="index.html" class="stext-102 cl2 hov-cl1 trans-04">
+                    <a href="{{route('home')}}" class="stext-102 cl2 hov-cl1 trans-04">
                         Home
                     </a>
                 </li>
@@ -26,6 +26,11 @@
                 <li class="p-b-13">
                     <a href="#" class="stext-102 cl2 hov-cl1 trans-04">
                         My Account
+                    </a>
+                </li>
+                <li class="p-b-13">
+                    <a href="{{route('features.mybill')}}" class="stext-102 cl2 hov-cl1 trans-04">
+                        My Bill
                     </a>
                 </li>
 
@@ -46,6 +51,17 @@
                         Help & FAQs
                     </a>
                 </li>
+                <li class="p-b-13">
+                    <a href="{{route('logout')}}"  onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();"
+                            {{ __('Logout') }} class="stext-102 cl2 hov-cl1 trans-04">
+                        Logout
+                    </a>
+                </li>
+                
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
                 @if (Auth::user() && Auth::user()->id == 1)
                 <li class="p-b-13">
                     <a href="/admin" class="stext-102 cl2 hov-cl1 trans-04">
